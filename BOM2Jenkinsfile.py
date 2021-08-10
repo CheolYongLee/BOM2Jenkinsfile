@@ -4,8 +4,8 @@ import clipboard
 import sys
 
 # 파일 불러오기
-BOMfile = "BOM_20210804.xlsx"
-BOM = pd.read_excel(BOMfile, header=None)
+BOMfile = sys.argv[1]
+BOM = pd.read_excel(BOMfile, header=None).fillna("") # 값이 없는 빈 셀은 공백처리
 
 # 데이터 추출
 ver = BOM[1][0]
@@ -24,8 +24,13 @@ except (ValueError, KeyError):
 try:
     column = 5
     list_ver = []
-    while column >= 5 and BOM[2][column]:
-        list_ver.append(str(BOM[2][column]))
+    while column >= 5 and len(list_ver) <= len(list_ID):
+        # 버전 미입력시 경고문 출력
+        if BOM[2][column] == "":
+            print("%s의 버전이 입력되지 않았습니다." % BOM[1][column])
+            list_ver.append("")
+        else:
+            list_ver.append(str(BOM[2][column]))
         column += 1
 except (ValueError, KeyError):
     pass
