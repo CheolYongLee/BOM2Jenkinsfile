@@ -1,6 +1,7 @@
+# Filename : BOM_20210804.xlsx
 # Ver : 3.7.4
-# Data : 2021.05.01
 # Author : Dongjoon Han
+# Data : 2021.05.01
 
 def StdLAN = '1.1.0'
 def StdWAN = '2.1.2'

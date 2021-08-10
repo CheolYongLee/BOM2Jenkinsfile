@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 import clipboard
+import sys
 
 # 파일 불러오기
 BOMfile = "BOM_20210804.xlsx"
@@ -34,22 +35,26 @@ f = open('JenkinsBuildSetting.txt', 'r')
 clipboard.copy(f.read())
 f.close()
 
+# 덮어쓰기 옵션 설정
+if len(sys.argv) == 3:
+    option = sys.argv[2]
+
 # Jenkins 파일 이름 중복 검사
 jenkinsname = "jenkinsfile"
 filename = jenkinsname
 number = 0
 
-while os.path.isfile(os.path.join("./", filename)):
-    overlap = str(input("같은 이름의 파일이 이미 있습니다. 덮어쓰시겠습니까?(y/n)\n"))
+while os.path.isfile(os.path.join("./", filename)) and (len(sys.argv) == 2 or option != "-s"):
+    overlap = str(input("%s 파일이 이미 있습니다. 덮어쓰시겠습니까?(y/n)\n" % filename))
     if overlap == "n":
         number += 1
         filename = jenkinsname + str(number)
-    elif overlap == "y":
+    else:
         break
 
 # 복사한 내용 붙여넣기
-f = open(jenkinsname, 'w')
-f.write("# Ver : %s\n# Data : %s\n# Author : %s\n\n" % (ver, data, Author))
+f = open(filename, 'w')
+f.write("# Filename : %s\n# Ver : %s\n# Author : %s\n# Data : %s\n\n" % (BOMfile, ver, Author, data))
 for i in range(len(list_ID)):
     f.write("def %s = '%s'\n" % (list_ID[i], list_ver[i]))
     i += 1
