@@ -10,9 +10,9 @@ def text_copypaste(list_info, list_ID, list_ver, filename, jenkinssetting='Jenki
     for data in range(len(list_info)):
         f.write("# %s : %s\n" % (list_info[data][0], list_info[data][1]))
     f.write("\n")
-    for i in range(len(list_ID)):
-        f.write("def %s = '%s'\n" % (list_ID[i], list_ver[i]))
-        i += 1
+    for number in range(len(list_ID)):
+        f.write("def %s = '%s'\n" % (list_ID[number], list_ver[number]))
+        number += 1
     f.write("\n\n" + clipboard.paste())
     f.close()
     return print("Copy and Paste success!!")

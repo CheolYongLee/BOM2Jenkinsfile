@@ -12,8 +12,9 @@ BOM = pd.read_excel(BOMfile, header=None).fillna("") # 값이 없는 빈 셀은 
 info = createList.create_info(BOM)
 list_info = list(info.items())
 
-list_ID = createList.create_ID(BOM)
-list_ver = createList.create_ver(BOM)
+
+list_ID = createList.create_data(BOM)["list_ID"]
+list_ver = createList.create_data(BOM)["list_ver"]
 
 # Jenkins 파일 이름 중복 검사
 filename = overlaptest.test_overlap()
